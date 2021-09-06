@@ -16,6 +16,10 @@ const ERROR = {
     UNKNOWN_DB_ERROR: "Unknown database error occurred.",
     MONGOOSE_ERROR: "Mongoose error occurred.",
   },
+  LOGIN: {
+    EMAIL_EMPTY: "Email must be passed.",
+    EMAIL_INVALID: "Email is invalid.",
+  },
 };
 
 module.exports = ERROR;
