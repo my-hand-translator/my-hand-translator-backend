@@ -6,10 +6,11 @@
     "start": "node ./bin/www",
     "pre-commit": "lint-staged && rm -rf .git/hooks && ln -s ../.husky .git/hooks",
     "prepare": "husky install",
-    "dev": "NODE_ENV=development nodemon ./bin/www.js"
+    "dev": "cross-env NODE_ENV=development nodemon ./bin/www.js"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
+    "cross-env": "^7.0.3",
     "debug": "~2.6.9",
     "dotenv": "^10.0.0",
     "express": "~4.16.1",

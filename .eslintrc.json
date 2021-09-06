@@ -13,7 +13,13 @@
     }
   },
   "rules": {
-    "prettier/prettier": ["error", { "singleQuote": false }],
+    "prettier/prettier": [
+      "error",
+      {
+        "singleQuote": false,
+        "endOfLine": "auto"
+      }
+    ],
     "no-unused-vars": [
       "error",
       {
