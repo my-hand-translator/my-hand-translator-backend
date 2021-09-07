@@ -1,7 +1,7 @@
 const HttpError = require("http-errors");
 
 function createHttpError(statusCode, message, errorCode) {
-  const error = new HttpError(statusCode, message);
+  const error = new HttpError(statusCode);
 
   error.result = "error";
   error.error = {
