@@ -1,8 +1,18 @@
 const mongoose = require("mongoose");
+const emailValidator = require("email-validator");
+
+const { SIGNUP } = require("../constants/error");
 
 const translationSchema = new mongoose.Schema(
   {
-    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    user: {
+      type: String,
+      required: true,
+      validate: {
+        validator: emailValidator.validate,
+        message: SIGNUP.INVALID_EMAIL,
+      },
+    },
     origin: { type: String, required: true, minLength: 1 },
     translated: { type: String, required: true },
     url: {
