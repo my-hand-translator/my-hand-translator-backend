@@ -19,15 +19,15 @@ describe("POST /users/login test", function cb() {
     name: "hongildong",
   };
 
-  const createMockVoting = async () => {
+  const createMockUser = async () => {
     await new User(mockUser).save();
   };
 
-  const deleteMockVoting = async () => {
+  const deleteMockUser = async () => {
     await User.findOneAndDelete({ email: mockUser.email });
   };
 
-  before(done => {
+  before((done) => {
     (function checkDatabaseConnection() {
       if (db.readyState === 1) {
         return done();
@@ -37,17 +37,19 @@ describe("POST /users/login test", function cb() {
     })();
   });
 
-  before(createMockVoting);
-  after(deleteMockVoting);
+  before(createMockUser);
+  after(deleteMockUser);
 
-  it("Should return an error if there is no email", done => {
+  it("Should return an error if there is no email", (done) => {
     request(app)
       .post("/users/login")
       .send({})
       .expect(502)
       .expect("Content-Type", "application/json; charset=utf-8")
       .end((err, res) => {
-        if (err) return done(err);
+        if (err) {
+          return done(err);
+        }
 
         expect(res.body).to.deep.include(
           createHttpError(502, LOGIN.EMAIL_EMPTY, 1000),
@@ -57,14 +59,16 @@ describe("POST /users/login test", function cb() {
       });
   });
 
-  it("Should return an error if invalid email format", done => {
+  it("Should return an error if invalid email format", (done) => {
     request(app)
       .post("/users/login")
       .send({ email: "invalid email" })
       .expect(502)
       .expect("Content-Type", "application/json; charset=utf-8")
       .end((err, res) => {
-        if (err) return done(err);
+        if (err) {
+          return done(err);
+        }
 
         expect(res.body).to.deep.include(
           createHttpError(502, LOGIN.EMAIL_INVALID, 1001),
@@ -74,14 +78,16 @@ describe("POST /users/login test", function cb() {
       });
   });
 
-  it("Should return an 'User not found' message when there is no user information in the database", done => {
+  it("Should return an 'User not found' message when there is no user information in the database", (done) => {
     request(app)
       .post("/users/login")
       .send({ email: "notFound@gmail.com" })
       .expect(200)
       .expect("Content-Type", "application/json; charset=utf-8")
       .end((err, res) => {
-        if (err) return done(err);
+        if (err) {
+          return done(err);
+        }
 
         const result = {
           result: "ok",
@@ -95,14 +101,16 @@ describe("POST /users/login test", function cb() {
       });
   });
 
-  it("Should return an 'User found' message when there is user information in the database", done => {
+  it("Should return an 'User found' message when there is user information in the database", (done) => {
     request(app)
       .post("/users/login")
       .send({ email: mockUser.email })
       .expect(200)
       .expect("Content-Type", "application/json; charset=utf-8")
       .end((err, res) => {
-        if (err) return done(err);
+        if (err) {
+          return done(err);
+        }
 
         const result = {
           result: "ok",
