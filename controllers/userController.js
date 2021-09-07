@@ -1,60 +1,15 @@
-const emailValidator = require("email-validator");
-const mongoose = require("mongoose");
 const HttpError = require("http-errors");
+const mongoose = require("mongoose");
 
-const { SIGNUP } = require("../constants/error");
 const Glossary = require("../models/Glossary");
 const Keyword = require("../models/Keyword");
-
 const User = require("../models/User");
+
 const createHttpError = require("../utils/createHttpError");
+const { SIGNUP } = require("../constants/error");
 
 const signup = async (req, res, next) => {
   const { email, name, keywords, glossary: glossaryInput } = req.body;
-
-  try {
-    if (!email) {
-      throw createHttpError(502, SIGNUP.NO_EMAIL, 1000);
-    }
-
-    if (!emailValidator.validate(email)) {
-      throw createHttpError(502, SIGNUP.INVALID_EMAIL, 1001);
-    }
-
-    if (!name) {
-      throw createHttpError(502, SIGNUP.NO_NAME, 1002);
-    }
-
-    if (!(name.length >= 1 && name.length <= 100)) {
-      throw createHttpError(502, SIGNUP.INVALID_NAME_LENGTH, 1002);
-    }
-
-    if (!keywords && keywords.length) {
-      throw createHttpError(502, SIGNUP.NO_KEYWORDS, 1003);
-    }
-
-    const isValidKeywordLength = keywords.every(
-      ({ length }) => length > 0 && length <= 100,
-    );
-
-    if (!isValidKeywordLength) {
-      throw createHttpError(502, SIGNUP.INVALID_KEYWORD_LENGTH, 1005);
-    }
-
-    if (!glossaryInput) {
-      throw createHttpError(502, SIGNUP.NO_GLOSSARY, 1004);
-    }
-
-    const isValidGlossaryTargetLength = Object.values(glossaryInput).every(
-      ({ length }) => length > 0 && length <= 1000,
-    );
-
-    if (!isValidGlossaryTargetLength) {
-      throw createHttpError(502, SIGNUP.INVALID_GLOSSARY_TARGET_LENGTH, 1007);
-    }
-  } catch (error) {
-    return next(error);
-  }
 
   try {
     const isExist = await User.exists({ email });
@@ -66,7 +21,7 @@ const signup = async (req, res, next) => {
     const user = await User.create({ email, name });
 
     if (!user) {
-      createHttpError(500, SIGNUP.CANNOT_CREATE_USER, 2000);
+      throw createHttpError(500, SIGNUP.CANNOT_CREATE_USER, 2000);
     }
 
     const glossary = await Glossary.create({
@@ -76,11 +31,13 @@ const signup = async (req, res, next) => {
     });
 
     if (!glossary) {
-      createHttpError(500, SIGNUP.CANNOT_CREATE_GLOSSARY, 2001);
+      throw createHttpError(500, SIGNUP.CANNOT_CREATE_GLOSSARY, 2001);
     }
 
     const keywordsFound = await Promise.allSettled(
-      keywords.map((keywordName) => Keyword.findOne({ name: keywordName })),
+      keywords.map((keywordName) =>
+        Keyword.findOne({ name: keywordName }).exec(),
+      ),
     );
 
     const keywordsCreated = keywordsFound.map((result, index) => {
