@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const emailValidator = require("email-validator");
 
+const { SIGNUP } = require("../constants/error");
+
 const userSchema = new mongoose.Schema(
   {
     email: {
@@ -9,7 +11,7 @@ const userSchema = new mongoose.Schema(
       unique: true,
       validate: {
         validator: emailValidator.validate,
-        message: "User's email is written in wrong format.",
+        message: SIGNUP.INVALID_EMAIL,
       },
     },
     name: {
