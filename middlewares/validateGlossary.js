@@ -1,4 +1,4 @@
-const { SIGNUP } = require("../constants/error");
+const { GLOSSARY } = require("../constants/error");
 
 const createHttpError = require("../utils/createHttpError");
 
@@ -7,7 +7,7 @@ const validateGlossary = (req, res, next) => {
 
   try {
     if (!glossary) {
-      throw createHttpError(502, SIGNUP.NO_GLOSSARY, 1004);
+      throw createHttpError(502, GLOSSARY.NO_GLOSSARY, 3000);
     }
 
     const isValidGlossaryTargetLength = Object.values(glossary).every(
@@ -15,7 +15,7 @@ const validateGlossary = (req, res, next) => {
     );
 
     if (!isValidGlossaryTargetLength) {
-      throw createHttpError(502, SIGNUP.INVALID_GLOSSARY_TARGET_LENGTH, 1007);
+      throw createHttpError(502, GLOSSARY.INVALID_GLOSSARY_TARGET_LENGTH, 3001);
     }
   } catch (error) {
     return next(error);
