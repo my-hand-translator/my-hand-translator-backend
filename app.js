@@ -4,11 +4,10 @@ require("./db");
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
+const createHttpError = require("./utils/createHttpError");
 
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
-
-const createHttpError = require("./utils/createHttpError");
 
 const app = express();
 

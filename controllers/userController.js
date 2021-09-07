@@ -6,6 +6,7 @@ const Keyword = require("../models/Keyword");
 const User = require("../models/User");
 
 const createHttpError = require("../utils/createHttpError");
+const { USER } = require("../constants/responseMessages");
 const { SIGNUP } = require("../constants/error");
 
 const signup = async (req, res, next) => {
@@ -82,6 +83,24 @@ const signup = async (req, res, next) => {
   return res.json({ result: "ok" });
 };
 
+const login = async (req, res, next) => {
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ email }).lean().exec();
+
+    const result = {
+      result: "ok",
+      isUser: !!user,
+      message: user ? USER.FOUND : USER.NOT_FOUND,
+    };
+
+    return res.json(result);
+  } catch (error) {
+    return next(createHttpError);
+  }
+};
+
 module.exports = {
   signup,
+  login,
 };

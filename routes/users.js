@@ -5,7 +5,7 @@ const validateGlossary = require("../middlewares/validateGlossary");
 const validateKeywords = require("../middlewares/validateKeywords");
 const validateUsername = require("../middlewares/validateUsername");
 
-const { signup } = require("../controllers/userController");
+const { signup, login } = require("../controllers/userController");
 
 const router = express.Router();
 
@@ -17,5 +17,7 @@ router.post(
   validateUsername,
   signup,
 );
+
+router.post("/login", validateEmail, login);
 
 module.exports = router;

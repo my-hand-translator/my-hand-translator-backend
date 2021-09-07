@@ -6,9 +6,11 @@
     "start": "node ./bin/www",
     "pre-commit": "lint-staged && rm -rf .git/hooks && ln -s ../.husky .git/hooks",
     "prepare": "husky install",
-    "dev": "cross-env NODE_ENV=development nodemon ./bin/www.js"
+    "dev": "cross-env NODE_ENV=development nodemon ./bin/www.js",
+    "test": "mocha spec/*"
   },
   "dependencies": {
+    "chai": "^4.3.4",
     "cookie-parser": "~1.4.4",
     "cross-env": "^7.0.3",
     "debug": "~2.6.9",
@@ -16,10 +18,13 @@
     "email-validator": "^2.0.4",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
+    "mocha": "^9.1.1",
     "mongoose": "^6.0.4",
-    "morgan": "~1.9.1"
+    "morgan": "~1.9.1",
+    "supertest": "^6.1.6"
   },
   "devDependencies": {
+    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "^8.3.0",
@@ -39,5 +44,10 @@
       "eslint --fix .",
       "git add"
     ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
