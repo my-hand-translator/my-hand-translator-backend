@@ -7,7 +7,7 @@ const User = require("../models/User");
 
 const createHttpError = require("../utils/createHttpError");
 const { USER } = require("../constants/responseMessages");
-const { SIGNUP } = require("../constants/error");
+const { SIGNUP, DB } = require("../constants/error");
 
 const signup = async (req, res, next) => {
   const { email, name, keywords, glossary: glossaryInput } = req.body;
@@ -73,11 +73,11 @@ const signup = async (req, res, next) => {
 
     if (error instanceof mongoose.Error) {
       return next(
-        createHttpError(500, `${SIGNUP.MONGOOSE_ERROR} ${error.message}`, 2005),
+        createHttpError(500, `${DB.MONGOOSE_ERROR} ${error.message}`, 2005),
       );
     }
 
-    return next(createHttpError(500, SIGNUP.UNKNOWN_DB_ERROR, 2004));
+    return next(createHttpError(500, DB.UNKNOWN_DB_ERROR, 2004));
   }
 
   return res.json({ result: "ok" });
