@@ -15,8 +15,10 @@ const validateGlossaryId = (req, res, next) => {
       throw createHttpError(502, GLOSSARY.INVALID_ID, 3003);
     }
   } catch (error) {
-    next(error);
+    return next(error);
   }
+
+  return next();
 };
 
 module.exports = validateGlossaryId;
