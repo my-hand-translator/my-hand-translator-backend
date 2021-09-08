@@ -72,10 +72,10 @@ const signup = async (req, res, next) => {
     }
 
     if (error instanceof mongoose.Error) {
-      return next(createHttpError(500, SERVER.INTERNAL_ERROR, 2005));
+      return next(createHttpError(500, SERVER.INTERNAL_ERROR, 1009));
     }
 
-    return next(createHttpError(500, SERVER.INTERNAL_ERROR, 2004));
+    return next(createHttpError(500, SERVER.INTERNAL_ERROR, 1009));
   }
 
   return res.json({ result: "ok" });
@@ -94,7 +94,7 @@ const login = async (req, res, next) => {
 
     return res.json(result);
   } catch (error) {
-    return next(createHttpError);
+    return next(createHttpError(500, SERVER.INTERNAL_ERROR, 1009));
   }
 };
 
