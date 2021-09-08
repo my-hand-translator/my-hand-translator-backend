@@ -15,6 +15,8 @@ const ERROR = {
   LOGIN: {
     EMAIL_EMPTY: "Email must be passed.",
     EMAIL_INVALID: "Email is invalid.",
+    UNAUTHORIZED_USER: "Unauthorized user.",
+    GOOGLE_LOGIN_FAILED: "Google verifying process failed.",
   },
   TRANSLATIONS: {
     NO_TEXT: "Text must be passed.",
