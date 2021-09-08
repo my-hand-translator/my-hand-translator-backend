@@ -2,11 +2,11 @@ const Translation = require("../models/Translation");
 const createHttpError = require("../utils/createHttpError");
 const { WORD } = require("../constants/error");
 
-const SECOND_DECIMAL_POINT = 2;
+const DECIMAL_POINT = 2;
 const PERCENTAGE = 100;
-const CRITERIA_SIMILARITY = 95;
+const SIMILARITY = 95;
 
-const checkSimilarity = (targets, words) => {
+const findSimilarTarget = (words, targets, similarity) => {
   if (!targets) {
     return null;
   }
@@ -14,10 +14,10 @@ const checkSimilarity = (targets, words) => {
   for (let i = 0; i < targets.length; i += 1) {
     const { origin } = targets[i];
     const includedRate = Math.floor(
-      (words.length / origin.length).toFixed(SECOND_DECIMAL_POINT) * PERCENTAGE,
+      (words.length / origin.length).toFixed(DECIMAL_POINT) * PERCENTAGE,
     );
 
-    if (includedRate >= CRITERIA_SIMILARITY) {
+    if (includedRate >= similarity) {
       return targets[i];
     }
   }
@@ -30,11 +30,11 @@ const checkTranslated = async (req, res, next) => {
     const { words } = req.query;
 
     if (!words) {
-      throw createHttpError(502, WORD.NO_WORD, 5001);
+      throw createHttpError(400, WORD.NO_WORD, 5001);
     }
 
     const translations = await Translation.find({ origin: { $regex: words } });
-    const translation = checkSimilarity(translations, words);
+    const translation = findSimilarTarget(words, translations, SIMILARITY);
 
     if (!translation) {
       return res.json({ result: "ok" });

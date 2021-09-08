@@ -8,7 +8,7 @@ const app = require("../../app");
 const Translation = require("../../models/Translation");
 const { WORD } = require("../../constants/error");
 
-describe.only("words route test", function cb() {
+describe("words route test", function cb() {
   this.timeout(10000);
 
   const db = mongoose.connection;
@@ -26,19 +26,17 @@ describe.only("words route test", function cb() {
       },
     };
 
-    Translation(translationData).save(() => done());
+    (async () => {
+      await Translation(translationData).save();
+      done();
+    })();
   };
 
   const deleteTranslation = (done) => {
-    Translation.findOneAndDelete(
-      {
-        user: "aidencoders@gmail.com",
-      },
-      (error) => {
-        if (error) done(error);
-        done();
-      },
-    );
+    Translation.findOneAndDelete({ user: "aidencoders@gmail.com" }, (error) => {
+      if (error) done(error);
+      done();
+    });
   };
 
   before((done) => {
@@ -59,7 +57,7 @@ describe.only("words route test", function cb() {
       request(app)
         .get("/words/translated?words=")
         .send({})
-        .expect(502)
+        .expect(400)
         .expect("Content-Type", "application/json; charset=utf-8")
         .end((err, res) => {
           if (err) {
@@ -67,7 +65,7 @@ describe.only("words route test", function cb() {
           }
 
           expect(res.body).to.deep.include(
-            createHttpError(502, WORD.NO_WORD, 5001),
+            createHttpError(400, WORD.NO_WORD, 5001),
           );
 
           return done();
