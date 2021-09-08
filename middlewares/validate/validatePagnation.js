@@ -2,7 +2,7 @@ const { TRANSLATIONS } = require("../../constants/error");
 const createHttpError = require("../../utils/createHttpError");
 
 const validatePagnation = (req, res, next) => {
-  const { page, limit } = req.query;
+  const { page, limit = 5 } = req.query;
 
   try {
     if (!page || !page.trim()) {
