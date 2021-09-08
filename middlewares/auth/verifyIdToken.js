@@ -3,7 +3,7 @@ const { OAuth2Client } = require("google-auth-library");
 
 const User = require("../../models/User");
 const createHttpError = require("../../utils/createHttpError");
-const { LOGIN } = require("../../constants/error");
+const { LOGIN, SERVER } = require("../../constants/error");
 
 const verifyIdToken = async (req, res, next) => {
   const { authorization, "client-id": clientId } = req.headers;
@@ -11,12 +11,14 @@ const verifyIdToken = async (req, res, next) => {
   const oAuthClient = new OAuth2Client(clientId);
 
   try {
-    const { payload } = await oAuthClient.verifyIdToken({
+    const {
+      payload: { email },
+    } = await oAuthClient.verifyIdToken({
       idToken,
       audience: clientId,
     });
 
-    const user = await User.findOne({ email: payload.email });
+    const user = await User.findOne({ email });
 
     if (!user) {
       throw createHttpError(401, LOGIN.UNAUTHORIZED_USER, 1007);
@@ -26,7 +28,7 @@ const verifyIdToken = async (req, res, next) => {
       return next(error);
     }
 
-    return next(createHttpError(500, LOGIN.GOOGLE_LOGIN_FAILED, 1008));
+    return next(createHttpError(500, SERVER.INTERNAL_ERROR));
   }
 
   return next();
