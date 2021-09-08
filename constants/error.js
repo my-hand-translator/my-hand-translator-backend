@@ -36,6 +36,9 @@ const ERROR = {
   SERVER: {
     INTERNAL_ERROR: "Internal server error.",
   },
+  WORD: {
+    NO_WORD: "Word must be passed.",
+  },
 };
 
 module.exports = ERROR;

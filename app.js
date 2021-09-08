@@ -10,6 +10,7 @@ const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const glossariesRouter = require("./routes/glossaries");
 const translationsRouter = require("./routes/translations");
+const wordsRouter = require("./routes/words");
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/glossaries", glossariesRouter);
 app.use("/translations", translationsRouter);
+app.use("/words", wordsRouter);
 
 app.use((req, res, next) => {
   next(createHttpError(404));
