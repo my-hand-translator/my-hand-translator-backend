@@ -3,8 +3,10 @@ const MESSAGE = {
     FOUND: "User found.",
     NOT_FOUND: "User not found.",
   },
-  COMMON: {
-    result: "ok",
+  RESULT: {
+    OK: "ok",
+    ERROR: "error",
+    FAIL: "fail",
   },
 };
 

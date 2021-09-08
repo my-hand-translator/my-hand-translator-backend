@@ -1,7 +1,7 @@
 const validator = require("email-validator");
 
-const { TRANSLATIONS } = require("../constants/error");
-const createHttpError = require("../utils/createHttpError");
+const { TRANSLATIONS } = require("../../constants/error");
+const createHttpError = require("../../utils/createHttpError");
 
 const validateUserIdParams = (req, res, next) => {
   const { user_id: userId } = req.params;

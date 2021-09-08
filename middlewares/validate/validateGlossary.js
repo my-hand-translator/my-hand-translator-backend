@@ -1,6 +1,6 @@
-const { GLOSSARY } = require("../constants/error");
+const { GLOSSARY } = require("../../constants/error");
 
-const createHttpError = require("../utils/createHttpError");
+const createHttpError = require("../../utils/createHttpError");
 
 const validateGlossary = (req, res, next) => {
   const { glossary } = req.body;

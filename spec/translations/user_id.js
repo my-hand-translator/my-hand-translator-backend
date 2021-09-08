@@ -5,8 +5,8 @@ const { describe, it, before, after } = require("mocha");
 
 const createHttpError = require("../../utils/createHttpError");
 const app = require("../../app");
-const Translation = require("../../models/User");
-const { TRANSLATIONS, SIGNUP } = require("../../constants/error");
+const Translation = require("../../models/Translation");
+const { TRANSLATIONS, GLOSSARY } = require("../../constants/error");
 
 describe("POST /translations/:user_id test", function cb() {
   this.timeout(10000);
@@ -35,7 +35,7 @@ describe("POST /translations/:user_id test", function cb() {
 
   it("Should return an error if invalid user id format", (done) => {
     request(app)
-      .post(`/translations/asdf`)
+      .post("/translations/asdf")
       .send({})
       .expect(400)
       .expect("Content-Type", "application/json; charset=utf-8")
@@ -69,7 +69,7 @@ describe("POST /translations/:user_id test", function cb() {
         }
 
         expect(res.body).to.deep.include(
-          createHttpError(502, SIGNUP.NO_GLOSSARY, 1004),
+          createHttpError(502, GLOSSARY.NO_GLOSSARY, 3000),
         );
 
         return done();
@@ -96,7 +96,7 @@ describe("POST /translations/:user_id test", function cb() {
         }
 
         expect(res.body).to.deep.include(
-          createHttpError(502, SIGNUP.INVALID_GLOSSARY_TARGET_LENGTH, 1007),
+          createHttpError(502, GLOSSARY.INVALID_GLOSSARY_TARGET_LENGTH, 3001),
         );
 
         return done();

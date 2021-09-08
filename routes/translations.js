@@ -1,8 +1,8 @@
 const express = require("express");
 
-const validateGlossary = require("../middlewares/validateGlossary");
-const validateTranslations = require("../middlewares/validateTranslations");
-const validateUserIdParams = require("../middlewares/validateUserIdParams");
+const validateGlossary = require("../middlewares/validate/validateGlossary");
+const validateTranslations = require("../middlewares/validate/validateTranslations");
+const validateUserIdParams = require("../middlewares/validate/validateUserIdParams");
 
 const { createByUserId } = require("../controllers/translationController");
 

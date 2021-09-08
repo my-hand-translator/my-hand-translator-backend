@@ -1,8 +1,8 @@
 const express = require("express");
 
 const editGlossary = require("../controllers/glossaryController");
-const validateGlossary = require("../middlewares/validateGlossary");
-const validateGlossaryId = require("../middlewares/validateGlossaryId");
+const validateGlossary = require("../middlewares/validate/validateGlossary");
+const validateGlossaryId = require("../middlewares/validate/validateGlossaryId");
 
 const router = express.Router();
 

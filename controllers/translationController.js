@@ -1,8 +1,8 @@
 const createHttpError = require("../utils/createHttpError");
 
 const Translation = require("../models/Translation");
-const { DB } = require("../constants/error");
-const { COMMON } = require("../constants/responseMessages");
+const { SERVER } = require("../constants/error");
+const { RESULT } = require("../constants/responseMessages");
 
 const createByUserId = async (req, res, next) => {
   try {
@@ -17,9 +17,9 @@ const createByUserId = async (req, res, next) => {
       glossary,
     }).save();
 
-    return res.json(COMMON);
+    return res.json({ result: RESULT.OK });
   } catch (error) {
-    return next(createHttpError(500, DB.MONGOOSE_ERROR));
+    return next(createHttpError(500, SERVER.INTERNAL_ERROR));
   }
 };
 

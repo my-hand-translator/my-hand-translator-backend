@@ -33,6 +33,9 @@ const ERROR = {
     UNKNOWN_DB_ERROR: "Unknown database error occurred.",
     MONGOOSE_ERROR: "Mongoose error occurred.",
   },
+  SERVER: {
+    INTERNAL_ERROR: "Internal server error.",
+  },
 };
 
 module.exports = ERROR;
