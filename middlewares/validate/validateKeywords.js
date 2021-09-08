@@ -1,6 +1,6 @@
-const { SIGNUP } = require("../constants/error");
+const { SIGNUP } = require("../../constants/error");
 
-const createHttpError = require("../utils/createHttpError");
+const createHttpError = require("../../utils/createHttpError");
 
 const validateKeywords = (req, res, next) => {
   const { keywords } = req.body;

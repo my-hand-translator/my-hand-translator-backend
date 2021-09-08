@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
-const createHttpError = require("../utils/createHttpError");
-const { GLOSSARY } = require("../constants/error");
+const createHttpError = require("../../utils/createHttpError");
+const { GLOSSARY } = require("../../constants/error");
 
 const validateGlossaryId = (req, res, next) => {
   const { glossary_id: glossaryId } = req.params;

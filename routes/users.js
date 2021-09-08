@@ -1,9 +1,9 @@
 const express = require("express");
 
-const validateEmail = require("../middlewares/validateEmail");
-const validateGlossary = require("../middlewares/validateGlossary");
-const validateKeywords = require("../middlewares/validateKeywords");
-const validateUsername = require("../middlewares/validateUsername");
+const validateEmail = require("../middlewares/validate/validateEmail");
+const validateGlossary = require("../middlewares/validate/validateGlossary");
+const validateKeywords = require("../middlewares/validate/validateKeywords");
+const validateUsername = require("../middlewares/validate/validateUsername");
 
 const { signup, login } = require("../controllers/userController");
 

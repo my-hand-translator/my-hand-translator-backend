@@ -16,6 +16,13 @@ const ERROR = {
     EMAIL_EMPTY: "Email must be passed.",
     EMAIL_INVALID: "Email is invalid.",
   },
+  TRANSLATIONS: {
+    NO_TEXT: "Text must be passed.",
+    NO_TRANSLATED: "Translated must be passed.",
+    NO_URL: "URL must be passed.",
+    NO_USER_ID: "User_id must be passed.",
+    INVALID_USER_ID: "User_id is invalid.",
+  },
   GLOSSARY: {
     NO_GLOSSARY: "Glossary must be passed.",
     INVALID_GLOSSARY_TARGET_LENGTH: "Glossary's target length is invalid.",
@@ -25,6 +32,9 @@ const ERROR = {
   DB: {
     UNKNOWN_DB_ERROR: "Unknown database error occurred.",
     MONGOOSE_ERROR: "Mongoose error occurred.",
+  },
+  SERVER: {
+    INTERNAL_ERROR: "Internal server error.",
   },
 };
 
