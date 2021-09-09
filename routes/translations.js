@@ -9,12 +9,14 @@ const validatePagnation = require("../middlewares/validate/validatePagnation");
 const {
   validateTranslation,
   validateTranslations,
+  validateTranslationId,
 } = require("../middlewares/validate/validateTranslations");
 
 const {
   byUserId,
   createByUserId,
   synchronize,
+  remove,
 } = require("../controllers/translationController");
 
 router.get("/:user_id", validateUserIdParams, validatePagnation, byUserId);
@@ -28,5 +30,7 @@ router.post(
   validateTranslation,
   createByUserId,
 );
+
+router.delete("/:translation_id", validateTranslationId, remove);
 
 module.exports = router;

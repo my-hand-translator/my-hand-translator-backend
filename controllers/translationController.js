@@ -68,8 +68,21 @@ const synchronize = async (req, res, next) => {
   }
 };
 
+const remove = async (req, res, next) => {
+  const { translation_id: translationId } = req.params;
+
+  try {
+    await Translation.findByIdAndDelete(translationId);
+
+    return res.json({ result: RESULT.OK });
+  } catch (error) {
+    return next(createHttpError(500, SERVER.INTERNAL_ERROR));
+  }
+};
+
 module.exports = {
   byUserId,
   createByUserId,
   synchronize,
+  remove,
 };

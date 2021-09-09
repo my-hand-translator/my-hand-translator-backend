@@ -27,6 +27,8 @@ const ERROR = {
     NAN_PAGE: "Page must be number.",
     NAN_LIMIT: "Limit must be number.",
     INVALID_USER_ID: "User_id is invalid.",
+    INVALID_TRANSLATED_ID: "Translated is invalid.",
+    NO_ID: "Translation id must be passed.",
   },
   GLOSSARY: {
     NO_GLOSSARY: "Glossary must be passed.",

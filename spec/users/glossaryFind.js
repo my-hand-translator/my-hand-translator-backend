@@ -10,7 +10,7 @@ const { TRANSLATIONS } = require("../../constants/error");
 const Glossary = require("../../models/Glossary");
 const { RESULT } = require("../../constants/responseMessages");
 
-describe.only("find glossary test", function cb() {
+describe("find glossary test", function cb() {
   this.timeout(10000);
 
   const db = mongoose.connection;

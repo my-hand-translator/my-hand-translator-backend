@@ -56,7 +56,6 @@ describe("words route test", function callback() {
     it("Should return an error if no words", (done) => {
       request(app)
         .get("/words/translated?words=")
-        .send({})
         .expect(400)
         .expect("Content-Type", "application/json; charset=utf-8")
         .end((err, res) => {
@@ -77,7 +76,6 @@ describe("words route test", function callback() {
         .get(
           "/words/translated?words=As your app grows, you can catch a lot of bugs with typ",
         )
-        .send({})
         .expect(200)
         .expect("Content-Type", "application/json; charset=utf-8")
         .end((err, res) => {
@@ -96,7 +94,6 @@ describe("words route test", function callback() {
         .get(
           "/words/translated?words=your app grows, you can catch a lot of bugs with typecheckin",
         )
-        .send({})
         .expect(200)
         .expect("Content-Type", "application/json; charset=utf-8")
         .end((err, res) => {

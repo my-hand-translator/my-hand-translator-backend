@@ -1,3 +1,5 @@
+const mongoose = require("mongoose");
+
 const { GLOSSARY, TRANSLATIONS } = require("../../constants/error");
 const createHttpError = require("../../utils/createHttpError");
 
@@ -69,6 +71,23 @@ module.exports.validateTranslations = (req, res, next) => {
     } catch (error) {
       return next(error);
     }
+  }
+
+  return next();
+};
+
+module.exports.validateTranslationId = (req, res, next) => {
+  const { translation_id: translationId } = req.params;
+  try {
+    if (!translationId) {
+      throw createHttpError(502, TRANSLATIONS.NO_ID, 4008);
+    }
+
+    if (!mongoose.isValidObjectId(translationId)) {
+      throw createHttpError(502, TRANSLATIONS.INVALID_TRANSLATED_ID, 4007);
+    }
+  } catch (error) {
+    return next(error);
   }
 
   return next();
