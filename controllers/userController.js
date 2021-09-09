@@ -66,6 +66,8 @@ const signup = async (req, res, next) => {
         );
       }
     });
+
+    return res.json({ result: RESULT.OK, glossaryId: glossary.id });
   } catch (error) {
     if (error instanceof HttpError) {
       return next(error);
@@ -77,8 +79,6 @@ const signup = async (req, res, next) => {
 
     return next(createHttpError(500, SERVER.INTERNAL_ERROR, 1009));
   }
-
-  return res.json({ result: RESULT.OK });
 };
 
 const login = async (req, res, next) => {
