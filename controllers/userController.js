@@ -85,7 +85,7 @@ const login = async (req, res, next) => {
   try {
     const { email } = req.body;
     const user = await User.findOne({ email }).lean().exec();
-    const glossary = await Glossary.findById(user._id).lean().exec();
+    const glossary = await Glossary.findOne({ user: user._id }).lean().exec();
 
     const result = {
       result: RESULT.OK,
