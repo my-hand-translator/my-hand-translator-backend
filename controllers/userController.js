@@ -85,10 +85,12 @@ const login = async (req, res, next) => {
   try {
     const { email } = req.body;
     const user = await User.findOne({ email }).lean().exec();
+    const glossary = await Glossary.findById(user._id).lean().exec();
 
     const result = {
       result: RESULT.OK,
       isUser: !!user,
+      glossaryId: glossary ? glossary._id : null,
       message: user ? USER.FOUND : USER.NOT_FOUND,
     };
 
