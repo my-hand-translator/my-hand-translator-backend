@@ -23,6 +23,9 @@ const ERROR = {
     NO_TRANSLATED: "Translated must be passed.",
     NO_URL: "URL must be passed.",
     NO_USER_ID: "User_id must be passed.",
+    NO_PAGE: "Page must be passed.",
+    NAN_PAGE: "Page must be number.",
+    NAN_LIMIT: "Limit must be number.",
     INVALID_USER_ID: "User_id is invalid.",
   },
   GLOSSARY: {

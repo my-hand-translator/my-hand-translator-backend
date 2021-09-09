@@ -4,11 +4,31 @@ const Translation = require("../models/Translation");
 const { SERVER } = require("../constants/error");
 const { RESULT } = require("../constants/responseMessages");
 
-const createByUserId = async (req, res, next) => {
-  try {
-    const { user_id: userId } = req.params;
-    const { text, translated, url, glossary } = req.body;
+const byUserId = async (req, res, next) => {
+  const { page, limit = 5 } = req.query;
+  const { user_id: userId } = req.params;
 
+  try {
+    const translations = await Translation.find({ user: userId })
+      .sort({ updatedAt: -1 })
+      .limit(limit * 1)
+      .skip((page - 1) * limit)
+      .exec();
+
+    return res.json({
+      result: RESULT.OK,
+      data: translations,
+    });
+  } catch (error) {
+    return next(createHttpError(500, SERVER.INTERNAL_ERROR, 4010));
+  }
+};
+
+const createByUserId = async (req, res, next) => {
+  const { user_id: userId } = req.params;
+  const { text, translated, url, glossary } = req.body;
+
+  try {
     await Translation({
       user: userId,
       origin: text,
@@ -19,7 +39,7 @@ const createByUserId = async (req, res, next) => {
 
     return res.json({ result: RESULT.OK });
   } catch (error) {
-    return next(createHttpError(500, SERVER.INTERNAL_ERROR));
+    return next(createHttpError(500, SERVER.INTERNAL_ERROR, 4010));
   }
 };
 
@@ -44,11 +64,12 @@ const synchronize = async (req, res, next) => {
 
     return res.json({ result: RESULT.OK });
   } catch (error) {
-    return next(createHttpError(500, SERVER.INTERNAL_ERROR));
+    return next(createHttpError(500, SERVER.INTERNAL_ERROR, 4010));
   }
 };
 
 module.exports = {
+  byUserId,
   createByUserId,
   synchronize,
 };

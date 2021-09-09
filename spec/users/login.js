@@ -9,7 +9,7 @@ const User = require("../../models/User");
 const { LOGIN } = require("../../constants/error");
 const { USER } = require("../../constants/responseMessages");
 
-describe("POST /users/login test", function cb() {
+describe("POST /users/login test", function callback() {
   this.timeout(10000);
 
   const db = mongoose.connection;

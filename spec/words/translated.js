@@ -8,7 +8,7 @@ const app = require("../../app");
 const Translation = require("../../models/Translation");
 const { WORD } = require("../../constants/error");
 
-describe("words route test", function cb() {
+describe("words route test", function callback() {
   this.timeout(10000);
 
   const db = mongoose.connection;
