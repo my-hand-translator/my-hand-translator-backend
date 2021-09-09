@@ -6,7 +6,7 @@ const Keyword = require("../models/Keyword");
 const User = require("../models/User");
 
 const createHttpError = require("../utils/createHttpError");
-const { USER } = require("../constants/responseMessages");
+const { USER, RESULT } = require("../constants/responseMessages");
 const { SIGNUP, SERVER } = require("../constants/error");
 
 const signup = async (req, res, next) => {
@@ -78,7 +78,7 @@ const signup = async (req, res, next) => {
     return next(createHttpError(500, SERVER.INTERNAL_ERROR, 1009));
   }
 
-  return res.json({ result: "ok" });
+  return res.json({ result: RESULT.OK });
 };
 
 const login = async (req, res, next) => {
@@ -87,7 +87,7 @@ const login = async (req, res, next) => {
     const user = await User.findOne({ email }).lean().exec();
 
     const result = {
-      result: "ok",
+      result: RESULT.OK,
       isUser: !!user,
       message: user ? USER.FOUND : USER.NOT_FOUND,
     };
@@ -98,7 +98,31 @@ const login = async (req, res, next) => {
   }
 };
 
+const findGlossary = async (req, res, next) => {
+  const { user_id: email } = req.params;
+
+  try {
+    const user = await User.findOne({ email }).lean().exec();
+    const glossary = await Glossary.findOne({ user: user._id }).lean().exec();
+
+    if (!glossary) {
+      return res.json({
+        result: RESULT.OK,
+        data: null,
+      });
+    }
+
+    return res.json({
+      result: RESULT.OK,
+      data: glossary.wordPairs,
+    });
+  } catch (error) {
+    return next(createHttpError(500, SERVER.INTERNAL_ERROR, 1009));
+  }
+};
+
 module.exports = {
   signup,
   login,
+  findGlossary,
 };
