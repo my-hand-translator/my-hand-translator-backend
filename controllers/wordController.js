@@ -33,14 +33,18 @@ const checkTranslated = async (req, res, next) => {
       throw createHttpError(400, WORD.NO_WORD, 5001);
     }
 
-    const translations = await Translation.find({ origin: { $regex: words } });
+    const translations = await Translation.find({ origin: { $regex: words } })
+      .lean()
+      .exec();
     const translation = findSimilarTarget(words, translations, SIMILARITY);
 
     if (!translation) {
       return res.json({ result: "ok" });
     }
 
-    return res.json({ result: "ok", data: translation.translated });
+    delete translation._id;
+
+    return res.json({ result: "ok", data: translation });
   } catch (error) {
     return next(error);
   }
