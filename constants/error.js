@@ -29,6 +29,8 @@ const ERROR = {
     INVALID_USER_ID: "User_id is invalid.",
     INVALID_TRANSLATED_ID: "Translated is invalid.",
     NO_ID: "Translation id must be passed.",
+    NO_NANO_ID: "NanoId must be passed.",
+    NO_CREATED_AT: "CreatedAt is invalid.",
   },
   GLOSSARY: {
     NO_GLOSSARY: "Glossary must be passed.",

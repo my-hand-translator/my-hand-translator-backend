@@ -2,29 +2,30 @@ const mongoose = require("mongoose");
 
 const { GLOSSARY, TRANSLATIONS } = require("../../constants/error");
 const createHttpError = require("../../utils/createHttpError");
-
-const isValidUrl = (url) => {
-  try {
-    return Boolean(new URL(url));
-  } catch (error) {
-    return false;
-  }
-};
+const isValid = require("../../utils/isValid");
 
 module.exports.validateTranslation = (req, res, next) => {
-  const { text, translated, url } = req.body;
+  const { nanoId, createdAt, text, translated, url } = req.body;
 
   try {
-    if (!text || !text.trim()) {
+    if (!isValid.string(text)) {
       throw createHttpError(502, TRANSLATIONS.NO_TEXT, 4001);
     }
 
-    if (!translated || !translated.trim()) {
+    if (!isValid.string(translated)) {
       throw createHttpError(502, TRANSLATIONS.NO_TRANSLATED, 4002);
     }
 
-    if (!isValidUrl(url)) {
+    if (!isValid.string(nanoId)) {
+      throw createHttpError(502, TRANSLATIONS.NO_NANO_ID, 4011);
+    }
+
+    if (!isValid.url(url)) {
       throw createHttpError(502, TRANSLATIONS.NO_URL, 4003);
+    }
+
+    if (!isValid.ISOString(createdAt)) {
+      throw createHttpError(502, TRANSLATIONS.NO_CREATED_AT, 4012);
     }
   } catch (error) {
     return next(error);
@@ -38,19 +39,27 @@ module.exports.validateTranslations = (req, res, next) => {
 
   for (let i = 0; i < translations.length; i += 1) {
     const translation = translations[i];
-    const { text, translated, url, glossary } = translation;
+    const { nanoId, createdAt, text, translated, url, glossary } = translation;
 
     try {
-      if (!text || !text.trim()) {
+      if (!isValid.string(text)) {
         throw createHttpError(502, TRANSLATIONS.NO_TEXT, 4001);
       }
 
-      if (!translated || !translated.trim()) {
+      if (!isValid.string(translated)) {
         throw createHttpError(502, TRANSLATIONS.NO_TRANSLATED, 4002);
       }
 
-      if (!isValidUrl(url)) {
+      if (!isValid.string(nanoId)) {
+        throw createHttpError(502, TRANSLATIONS.NO_NANO_ID, 4011);
+      }
+
+      if (!isValid.url(url)) {
         throw createHttpError(502, TRANSLATIONS.NO_URL, 4003);
+      }
+
+      if (!isValid.ISOString(createdAt)) {
+        throw createHttpError(502, TRANSLATIONS.NO_CREATED_AT, 4012);
       }
 
       if (!glossary) {
