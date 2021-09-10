@@ -26,15 +26,17 @@ const byUserId = async (req, res, next) => {
 
 const createByUserId = async (req, res, next) => {
   const { user_id: userId } = req.params;
-  const { text, translated, url, glossary } = req.body;
+  const { nanoId, text, translated, url, glossary, createdAt } = req.body;
 
   try {
     await Translation({
+      nanoId,
       user: userId,
       origin: text,
       translated,
       url,
       glossary,
+      createdAt,
     }).save();
 
     return res.json({ result: RESULT.OK });
@@ -53,7 +55,10 @@ const synchronize = async (req, res, next) => {
     bulkData.push({
       updateOne: {
         filter: { user: email, origin: translation.text },
-        update: { user: email, ...translation },
+        update: {
+          user: email,
+          ...translation,
+        },
         upsert: true,
       },
     });
