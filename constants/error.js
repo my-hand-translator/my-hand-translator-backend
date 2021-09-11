@@ -37,6 +37,7 @@ const ERROR = {
     INVALID_GLOSSARY_TARGET_LENGTH: "Glossary's target length is invalid.",
     INVALID_ID: "Glossary's id is invalid.",
     NO_ID: "Glossary id must be passed.",
+    NO_SEARCH_KEYWORD: "Search Keyword must be passed.",
   },
   DB: {
     UNKNOWN_DB_ERROR: "Unknown database error occurred.",
