@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const glossarySchema = new mongoose.Schema(
   {
-    user: { type: mongoose.Schema.Types.ObjectId, required: true },
+    user: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "User" },
     keywords: [{ type: String, required: true, minLength: 1, maxLength: 100 }],
     wordPairs: {
       type: Map,

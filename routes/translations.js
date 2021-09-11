@@ -5,7 +5,7 @@ const router = express.Router();
 const validateEmail = require("../middlewares/validate/validateEmail");
 const validateGlossary = require("../middlewares/validate/validateGlossary");
 const validateUserIdParams = require("../middlewares/validate/validateUserIdParams");
-const validatePagnation = require("../middlewares/validate/validatePagnation");
+const validatePagination = require("../middlewares/validate/validatePagination");
 const {
   validateTranslation,
   validateTranslations,
@@ -19,7 +19,7 @@ const {
   remove,
 } = require("../controllers/translationController");
 
-router.get("/:user_id", validateUserIdParams, validatePagnation, byUserId);
+router.get("/:user_id", validateUserIdParams, validatePagination, byUserId);
 
 router.post("/", validateEmail, validateTranslations, synchronize);
 
