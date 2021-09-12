@@ -26,34 +26,25 @@ const getGlossariesByKeyword = async (req, res, next) => {
 
   try {
     if (!keyword.trim()) {
-      const glossaries = await Glossary.find()
+      glossariesSearched = await Glossary.find()
         .populate("user")
         .sort({ updatedAt: -1 })
         .limit(limit * 1)
         .skip((page - 1) * limit)
         .exec();
-
-      glossariesSearched = glossaries.map((glossary) => ({
-        userEmail: glossary.user.email,
-        glossary: {
-          wordPairs: glossary.wordPairs,
-          keywords: glossary.keywords,
-          updateAt: glossary.updatedAt,
-        },
-      }));
     } else {
       const keywords = await Keyword.find({ name: { $regex: keyword } })
         .populate({ path: "glossaries", populate: { path: "user" } })
         .lean()
         .exec();
 
-      const glossariesByPage = [
+      const glossariesHavingKeyword = [
         ...new Set(
           keywords.map((keywordDocument) => keywordDocument.glossaries).flat(),
         ),
       ];
 
-      glossariesSearched = glossariesByPage.slice(
+      glossariesSearched = glossariesHavingKeyword.slice(
         limit * (page - 1),
         limit * page,
       );
