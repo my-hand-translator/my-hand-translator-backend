@@ -19,8 +19,7 @@ const editGlossary = async (req, res, next) => {
 };
 
 const getGlossariesByKeyword = async (req, res, next) => {
-  const { page, limit = 5 } = req.query;
-  const { keyword } = req.query;
+  const { page, limit = 5, keyword = "" } = req.query;
 
   let glossariesSearched = [];
 
