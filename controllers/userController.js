@@ -1,4 +1,4 @@
-const HttpError = require("http-errors");
+const createError = require("http-errors");
 const mongoose = require("mongoose");
 
 const Glossary = require("../models/Glossary");
@@ -69,7 +69,7 @@ const signup = async (req, res, next) => {
 
     return res.json({ result: RESULT.OK, glossaryId: glossary.id });
   } catch (error) {
-    if (error instanceof HttpError) {
+    if (error instanceof createError.HttpError) {
       return next(error);
     }
 
