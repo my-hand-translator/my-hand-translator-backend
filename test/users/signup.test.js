@@ -2,7 +2,7 @@
 const mongoose = require("mongoose");
 const request = require("supertest");
 const { expect } = require("chai");
-const { describe, before, afterEach, it, after } = require("mocha");
+const { describe, before, it, after } = require("mocha");
 
 const User = require("../../models/User");
 const Glossary = require("../../models/Glossary");
@@ -35,18 +35,6 @@ describe("POST /users/signup test", function callback() {
   after((done) => {
     try {
       (async () => {
-        await User.deleteOne({ email: "testUser@gmail.com" });
-
-        done();
-      })();
-    } catch (error) {
-      done(error);
-    }
-  });
-
-  afterEach((done) => {
-    try {
-      (async () => {
         const user = await User.findOne({ email: mockUser.email })
           .lean()
           .exec();
@@ -69,33 +57,6 @@ describe("POST /users/signup test", function callback() {
     } catch (error) {
       done(error);
     }
-  });
-
-  it("should signup(create User, Keywords, Glossary) when valid input passed.", (done) => {
-    request(app)
-      .post("/users/signup")
-      .send(mockUser)
-      .expect(200)
-      .expect("Content-Type", "application/json; charset=utf-8")
-      .end((err, res) => {
-        if (err) {
-          return done(err);
-        }
-
-        expect(res.body.result).to.be.exist;
-        expect(res.body.result).to.equal("ok");
-        expect(res.body.glossaryId).to.be.exist;
-        expect(mongoose.isValidObjectId(res.body.glossaryId)).to.be.true;
-
-        (async () => {
-          expect(
-            await Glossary.findById(res.body.glossaryId).populate("user").lean()
-              .email,
-          ).to.equal(mockUser.email);
-        })();
-
-        return done();
-      });
   });
 
   it("should fail to signup when invalid email passed", (done) => {
@@ -185,6 +146,33 @@ describe("POST /users/signup test", function callback() {
         expect(res.body.error).to.be.exist;
         expect(res.body.error.message).to.be.exist;
         expect(res.body.error.message).to.equal(SIGNUP.INVALID_NAME_LENGTH);
+
+        return done();
+      });
+  });
+
+  it("should signup(create User, Keywords, Glossary) when valid input passed.", (done) => {
+    request(app)
+      .post("/users/signup")
+      .send(mockUser)
+      .expect(200)
+      .expect("Content-Type", "application/json; charset=utf-8")
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
+
+        expect(res.body.result).to.be.exist;
+        expect(res.body.result).to.equal("ok");
+        expect(res.body.glossaryId).to.be.exist;
+        expect(mongoose.isValidObjectId(res.body.glossaryId)).to.be.true;
+
+        (async () => {
+          expect(
+            await Glossary.findById(res.body.glossaryId).populate("user").lean()
+              .email,
+          ).to.equal(mockUser.email);
+        })();
 
         return done();
       });
