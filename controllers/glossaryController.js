@@ -43,6 +43,11 @@ const getGlossariesByKeyword = async (req, res, next) => {
         ),
       ];
 
+      glossariesHavingKeyword.sort(
+        (glossaryA, glossaryB) =>
+          new Date(glossaryB.updatedAt) - new Date(glossaryA.updatedAt),
+      );
+
       glossariesSearched = glossariesHavingKeyword.slice(
         limit * (page - 1),
         limit * page,
