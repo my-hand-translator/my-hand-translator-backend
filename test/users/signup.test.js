@@ -8,7 +8,7 @@ const User = require("../../models/User");
 const Glossary = require("../../models/Glossary");
 const Keyword = require("../../models/Keyword");
 const app = require("../../app");
-const { SIGNUP, GLOSSARY, SERVER } = require("../../constants/error");
+const { SIGNUP, GLOSSARY } = require("../../constants/error");
 
 describe.only("POST /users/signup test", function callback() {
   this.timeout(10000);
@@ -30,6 +30,33 @@ describe.only("POST /users/signup test", function callback() {
 
       return setTimeout(checkDatabaseConnection, 1000);
     })();
+  });
+
+  // before((done) => {
+  //   try {
+  //     (async () => {
+  //       await User.create({
+  //         email: "testUser@gmail.com",
+  //         name: "testUser",
+  //       });
+  //     })();
+
+  //     return done();
+  //   } catch (error) {
+  //     return done(error);
+  //   }
+  // });
+
+  after((done) => {
+    try {
+      (async () => {
+        await User.deleteOne({ email: "testUser@gmail.com" });
+      })();
+
+      done();
+    } catch (error) {
+      done(error);
+    }
   });
 
   afterEach((done) => {
@@ -54,18 +81,6 @@ describe.only("POST /users/signup test", function callback() {
 
         done();
       })();
-    } catch (error) {
-      done(error);
-    }
-  });
-
-  after((done) => {
-    try {
-      (async () => {
-        await User.deleteOne({ email: "testUser@gmail.com" });
-      })();
-
-      done();
     } catch (error) {
       done(error);
     }
@@ -197,6 +212,8 @@ describe.only("POST /users/signup test", function callback() {
           email: "testUser@gmail.com",
           name: "testUser",
         });
+
+        expect(await User.exists({ email: "testUser@gmail.com" })).to.be.true;
       })();
     } catch (error) {
       return done(error);
@@ -208,7 +225,7 @@ describe.only("POST /users/signup test", function callback() {
         ...mockUser,
         email: "testUser@gmail.com",
       })
-      .expect(500)
+      .expect(401)
       .expect("Content-Type", "application/json; charset=utf-8")
       .end((err, res) => {
         if (err) {
@@ -219,7 +236,7 @@ describe.only("POST /users/signup test", function callback() {
         expect(res.body.result).to.equal("error");
         expect(res.body.error).to.be.exist;
         expect(res.body.error.message).to.be.exist;
-        expect(res.body.error.message).to.equal(SERVER.INTERNAL_ERROR);
+        expect(res.body.error.message).to.equal(SIGNUP.REGISTERED_USER);
 
         return done();
       });
