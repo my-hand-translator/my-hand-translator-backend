@@ -10,7 +10,7 @@ const Keyword = require("../../models/Keyword");
 const app = require("../../app");
 const { SIGNUP, GLOSSARY } = require("../../constants/error");
 
-describe.only("POST /users/signup test", function callback() {
+describe("POST /users/signup test", function callback() {
   this.timeout(10000);
 
   const db = mongoose.connection;
@@ -36,9 +36,9 @@ describe.only("POST /users/signup test", function callback() {
     try {
       (async () => {
         await User.deleteOne({ email: "testUser@gmail.com" });
-      })();
 
-      done();
+        done();
+      })();
     } catch (error) {
       done(error);
     }
