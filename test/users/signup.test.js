@@ -32,21 +32,6 @@ describe.only("POST /users/signup test", function callback() {
     })();
   });
 
-  // before((done) => {
-  //   try {
-  //     (async () => {
-  //       await User.create({
-  //         email: "testUser@gmail.com",
-  //         name: "testUser",
-  //       });
-  //     })();
-
-  //     return done();
-  //   } catch (error) {
-  //     return done(error);
-  //   }
-  // });
-
   after((done) => {
     try {
       (async () => {
