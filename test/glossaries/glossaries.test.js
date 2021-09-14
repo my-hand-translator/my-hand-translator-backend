@@ -9,7 +9,7 @@ const Glossary = require("../../models/Glossary");
 const Keyword = require("../../models/Keyword");
 const app = require("../../app");
 
-describe("GET /glossaries?keyword=<WORD>&?page=<Number>?limit=<Number> test", function callback() {
+describe("GET /glossaries?keyword=<WORD>&page=<Number>&limit=<Number> test", function callback() {
   this.timeout(10000);
 
   const db = mongoose.connection;
@@ -150,55 +150,55 @@ describe("GET /glossaries?keyword=<WORD>&?page=<Number>?limit=<Number> test", fu
           { user: user._id },
           { $set: { wordPairs: { user2word: "업데이트된 유저2의 용어" } } },
         );
+
+        request(app)
+          .get("/glossaries?keyword=user&limit=1&page=1")
+          .expect(200)
+          .end((err, res) => {
+            if (err) {
+              return done(err);
+            }
+
+            expect(res.body.result).to.be.exist;
+            expect(res.body.result).to.equal("ok");
+            expect(res.body.data).to.be.exist;
+            expect(res.body.data.length).to.equal(1);
+            expect(res.body.data[0].userEmail).to.equal("mockUser2@gmail.com");
+            expect(res.body.data[0].glossary.keywords).to.deep.equal([
+              "user2Keyword",
+            ]);
+            expect(res.body.data[0].glossary.wordPairs).to.deep.equal({
+              user2word: "업데이트된 유저2의 용어",
+            });
+
+            return null;
+          });
+
+        request(app)
+          .get("/glossaries?keyword=user&limit=1&page=2")
+          .expect(200)
+          .end((err, res) => {
+            if (err) {
+              return done(err);
+            }
+
+            expect(res.body.result).to.be.exist;
+            expect(res.body.result).to.equal("ok");
+            expect(res.body.data).to.be.exist;
+            expect(res.body.data.length).to.equal(1);
+            expect(res.body.data[0].userEmail).to.equal("mockUser1@gmail.com");
+            expect(res.body.data[0].glossary.keywords).to.deep.equal([
+              "user1Keyword",
+            ]);
+            expect(res.body.data[0].glossary.wordPairs).to.deep.equal({
+              user1word: "유저1의용어",
+            });
+
+            return done();
+          });
       } catch (error) {
         done(error);
       }
     })();
-
-    request(app)
-      .get("/glossaries?keyword=user&limit=1&page=1")
-      .expect(200)
-      .end((err, res) => {
-        if (err) {
-          return done(err);
-        }
-
-        expect(res.body.result).to.be.exist;
-        expect(res.body.result).to.equal("ok");
-        expect(res.body.data).to.be.exist;
-        expect(res.body.data.length).to.equal(1);
-        expect(res.body.data[0].userEmail).to.equal("mockUser2@gmail.com");
-        expect(res.body.data[0].glossary.keywords).to.deep.equal([
-          "user2Keyword",
-        ]);
-        expect(res.body.data[0].glossary.wordPairs).to.deep.equal({
-          user2word: "업데이트된 유저2의 용어",
-        });
-
-        return null;
-      });
-
-    request(app)
-      .get("/glossaries?keyword=user&limit=1&page=2")
-      .expect(200)
-      .end((err, res) => {
-        if (err) {
-          return done(err);
-        }
-
-        expect(res.body.result).to.be.exist;
-        expect(res.body.result).to.equal("ok");
-        expect(res.body.data).to.be.exist;
-        expect(res.body.data.length).to.equal(1);
-        expect(res.body.data[0].userEmail).to.equal("mockUser1@gmail.com");
-        expect(res.body.data[0].glossary.keywords).to.deep.equal([
-          "user1Keyword",
-        ]);
-        expect(res.body.data[0].glossary.wordPairs).to.deep.equal({
-          user1word: "유저1의용어",
-        });
-
-        return done();
-      });
   });
 });
