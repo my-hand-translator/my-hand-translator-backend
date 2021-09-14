@@ -48,8 +48,6 @@ const getGlossariesByKeyword = async (req, res, next) => {
           new Date(glossaryB.updatedAt) - new Date(glossaryA.updatedAt),
       );
 
-      console.log(glossariesHavingKeyword);
-
       glossariesSearched = glossariesHavingKeyword.slice(
         limit * (page - 1),
         limit * page,

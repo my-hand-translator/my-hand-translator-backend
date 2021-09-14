@@ -9,7 +9,7 @@ const Glossary = require("../../models/Glossary");
 const Keyword = require("../../models/Keyword");
 const app = require("../../app");
 
-describe.only("GET /glossaries?keyword=<WORD>&?page=<Number>?limit=<Number> test", function callback() {
+describe("GET /glossaries?keyword=<WORD>&?page=<Number>?limit=<Number> test", function callback() {
   this.timeout(10000);
 
   const db = mongoose.connection;
