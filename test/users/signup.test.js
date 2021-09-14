@@ -8,9 +8,9 @@ const User = require("../../models/User");
 const Glossary = require("../../models/Glossary");
 const Keyword = require("../../models/Keyword");
 const app = require("../../app");
-const { SIGNUP, GLOSSARY } = require("../../constants/error");
+const { SIGNUP, GLOSSARY, SERVER } = require("../../constants/error");
 
-describe("POST /users/signup test", function callback() {
+describe.only("POST /users/signup test", function callback() {
   this.timeout(10000);
 
   const db = mongoose.connection;
@@ -19,16 +19,13 @@ describe("POST /users/signup test", function callback() {
     email: "gNMmCl07Z-L2ND98JC4yx@gmail.com",
     name: "tegNMmCl07Z-L2ND98JC4yxstTestTest",
     keywords: ["4cln7ijIKFR_QQqtwMA2f", "SGtPhaj8kWLHLd3mkLIu4"],
-    glossary: {
-      test: "테스트",
-      mock: "목",
-    },
+    glossary: { test: "테스트", mock: "목" },
   };
 
   before((done) => {
     (function checkDatabaseConnection() {
       if (db.readyState === 1) {
-        done();
+        return done();
       }
 
       return setTimeout(checkDatabaseConnection, 1000);
@@ -104,7 +101,7 @@ describe("POST /users/signup test", function callback() {
   it("should fail to signup when invalid email passed", (done) => {
     request(app)
       .post("/users/signup")
-      .send({ ...mockUser, glossary: "invalidEmail" })
+      .send({ ...mockUser, email: "invalidEmail" })
       .expect(502)
       .expect("Content-Type", "application/json; charset=utf-8")
       .end((err, res) => {
@@ -201,10 +198,8 @@ describe("POST /users/signup test", function callback() {
           name: "testUser",
         });
       })();
-
-      done();
     } catch (error) {
-      done(error);
+      return done(error);
     }
 
     request(app)
@@ -213,7 +208,7 @@ describe("POST /users/signup test", function callback() {
         ...mockUser,
         email: "testUser@gmail.com",
       })
-      .expect(401)
+      .expect(500)
       .expect("Content-Type", "application/json; charset=utf-8")
       .end((err, res) => {
         if (err) {
@@ -224,9 +219,11 @@ describe("POST /users/signup test", function callback() {
         expect(res.body.result).to.equal("error");
         expect(res.body.error).to.be.exist;
         expect(res.body.error.message).to.be.exist;
-        expect(res.body.error.message).to.equal(SIGNUP.REGISTERED_USER);
+        expect(res.body.error.message).to.equal(SERVER.INTERNAL_ERROR);
 
         return done();
       });
+
+    return null;
   });
 });
