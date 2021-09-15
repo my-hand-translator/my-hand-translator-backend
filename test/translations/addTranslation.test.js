@@ -39,7 +39,8 @@ describe("add translations test", function callback() {
     email: "somting@gmail.com",
     translations: [
       {
-        text: "As your app grows, you can catch a lot of bugs with typechecking.",
+        origin:
+          "As your app grows, you can catch a lot of bugs with typechecking.",
         translated:
           "앱이 성장함에 따라 유형 검사로 많은 버그를 잡을 수 있습니다.",
         url: "http://www.naver.com",

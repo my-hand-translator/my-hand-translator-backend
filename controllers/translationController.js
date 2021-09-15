@@ -26,13 +26,13 @@ const byUserId = async (req, res, next) => {
 
 const createByUserId = async (req, res, next) => {
   const { user_id: userId } = req.params;
-  const { nanoId, text, translated, url, glossary, createdAt } = req.body;
+  const { nanoId, origin, translated, url, glossary, createdAt } = req.body;
 
   try {
     await Translation({
       nanoId,
       user: userId,
-      origin: text,
+      origin,
       translated,
       url,
       glossary,
@@ -54,7 +54,7 @@ const synchronize = async (req, res, next) => {
 
     bulkData.push({
       updateOne: {
-        filter: { user: email, origin: translation.text },
+        filter: { user: email, origin: translation.origin },
         update: {
           user: email,
           ...translation,

@@ -169,7 +169,8 @@ describe("/translations/:user_id", function callback() {
       request(app)
         .post(`/translations/${mockUserId}`)
         .send({
-          text: "As your app grows, you can catch a lot of bugs with typechecking.",
+          origin:
+            "As your app grows, you can catch a lot of bugs with typechecking.",
           translated:
             "앱이 성장함에 따라 유형 검사로 많은 버그를 잡을 수 있습니다.",
           url: "http://www.naver.com",
@@ -193,7 +194,8 @@ describe("/translations/:user_id", function callback() {
       request(app)
         .post(`/translations/${mockUserId}`)
         .send({
-          text: "As your app grows, you can catch a lot of bugs with typechecking.",
+          origin:
+            "As your app grows, you can catch a lot of bugs with typechecking.",
           translated:
             "앱이 성장함에 따라 유형 검사로 많은 버그를 잡을 수 있습니다.",
           url: "http://www.naver.com",
@@ -246,7 +248,8 @@ describe("/translations/:user_id", function callback() {
       request(app)
         .post(`/translations/${mockUserId}`)
         .send({
-          text: "As your app grows, you can catch a lot of bugs with typechecking.",
+          origin:
+            "As your app grows, you can catch a lot of bugs with typechecking.",
           url: "http://www.naver.com",
           glossary: {
             react: "리액트",
@@ -271,7 +274,8 @@ describe("/translations/:user_id", function callback() {
       request(app)
         .post(`/translations/${mockUserId}`)
         .send({
-          text: "As your app grows, you can catch a lot of bugs with typechecking.",
+          origin:
+            "As your app grows, you can catch a lot of bugs with typechecking.",
           translated:
             "앱이 성장함에 따라 유형 검사로 많은 버그를 잡을 수 있습니다.",
           glossary: {
