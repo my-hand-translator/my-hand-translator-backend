@@ -10,7 +10,7 @@ const { TRANSLATIONS, GLOSSARY } = require("../../constants/error");
 const { RESULT } = require("../../constants/responseMessages");
 
 describe("/translations/:user_id", function callback() {
-  this.timeout(10000);
+  this.timeout(1000);
 
   const db = mongoose.connection;
 
@@ -26,6 +26,7 @@ describe("/translations/:user_id", function callback() {
 
   describe("GET /translations/:user_id?page=STRING&limit=STRING test", () => {
     const mockTranslations = {
+      nanoId: "1",
       origin: "test1",
       user: "test-translations@gmail.com",
       glossary: {
@@ -33,6 +34,7 @@ describe("/translations/:user_id", function callback() {
       },
       translated: "성장함에 따라 유형 검사로 많은 버그를 잡을 수 있습니다.",
       url: "http://www.naver.com",
+      createdAt: new Date().toISOString(),
     };
 
     let storedTranslations = null;
@@ -45,7 +47,7 @@ describe("/translations/:user_id", function callback() {
       await Translation.findOneAndDelete({ email: mockTranslations.email });
     };
 
-    const findTranslationasync = async () => {
+    const findTranslationAsync = async () => {
       const translation = await Translation.findOne({
         email: mockTranslations.email,
       })
@@ -56,7 +58,7 @@ describe("/translations/:user_id", function callback() {
 
     before(async () => {
       await createMock();
-      await findTranslationasync();
+      await findTranslationAsync();
     });
     after(deleteMock);
 
@@ -281,6 +283,7 @@ describe("/translations/:user_id", function callback() {
           glossary: {
             react: "리액트",
           },
+          nanoId: "1",
         })
         .expect(502)
         .expect("Content-Type", "application/json; charset=utf-8")

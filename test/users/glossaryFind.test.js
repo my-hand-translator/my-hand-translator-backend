@@ -14,18 +14,24 @@ describe("find glossary test", function cb() {
   this.timeout(10000);
 
   const db = mongoose.connection;
-  let user = null;
+  let userWithGlossary = null;
+  let userWithoutGlossary = null;
   let glossary = null;
 
   const createMockData = (done) => {
     (async () => {
-      user = await User.create({
+      userWithGlossary = await User.create({
         email: "test@vc.com",
         name: "test",
       });
 
+      userWithoutGlossary = await User.create({
+        email: "test@gmail.com",
+        name: "test",
+      });
+
       glossary = await Glossary.create({
-        user,
+        user: userWithGlossary,
         keywords: ["react"],
         wordPairs: {
           react: "리액트",
@@ -39,7 +45,8 @@ describe("find glossary test", function cb() {
 
   const deleteMock = (done) => {
     (async () => {
-      await User.findByIdAndDelete(user.id);
+      await User.findByIdAndDelete(userWithGlossary.id);
+      await User.findByIdAndDelete(userWithoutGlossary.id);
       await Glossary.findByIdAndDelete(glossary.id);
 
       done();
@@ -85,6 +92,7 @@ describe("find glossary test", function cb() {
         .expect("Content-Type", "application/json; charset=utf-8")
         .end((err, res) => {
           if (err) {
+            console.log(err);
             return done(err);
           }
 
