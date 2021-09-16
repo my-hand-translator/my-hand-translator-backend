@@ -5,10 +5,10 @@ const createHttpError = require("../../utils/createHttpError");
 const isValid = require("../../utils/isValid");
 
 module.exports.validateTranslation = (req, res, next) => {
-  const { nanoId, createdAt, text, translated, url } = req.body;
+  const { nanoId, createdAt, origin, translated, url } = req.body;
 
   try {
-    if (!isValid.string(text)) {
+    if (!isValid.string(origin)) {
       throw createHttpError(502, TRANSLATIONS.NO_TEXT, 4001);
     }
 
@@ -39,10 +39,11 @@ module.exports.validateTranslations = (req, res, next) => {
 
   for (let i = 0; i < translations.length; i += 1) {
     const translation = translations[i];
-    const { nanoId, createdAt, text, translated, url, glossary } = translation;
+    const { nanoId, createdAt, origin, translated, url, glossary } =
+      translation;
 
     try {
-      if (!isValid.string(text)) {
+      if (!isValid.string(origin)) {
         throw createHttpError(502, TRANSLATIONS.NO_TEXT, 4001);
       }
 
