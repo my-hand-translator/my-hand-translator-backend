@@ -2,18 +2,11 @@ const mongoose = require("mongoose");
 const request = require("supertest");
 const { expect } = require("chai");
 const { describe, it, before, after } = require("mocha");
-const sinon = require("sinon");
 
 const createHttpError = require("../../utils/createHttpError");
 const User = require("../../models/User");
 const { LOGIN } = require("../../constants/error");
 const { USER } = require("../../constants/responseMessages");
-
-const auth = require("../../middlewares/auth/verifyIdToken");
-
-sinon.stub(auth, "verifyIdToken").callsFake((req, res, next) => {
-  return next();
-});
 
 const app = require("../../app");
 

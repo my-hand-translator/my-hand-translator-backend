@@ -7,8 +7,9 @@ const { describe, before, it, after } = require("mocha");
 const User = require("../../models/User");
 const Glossary = require("../../models/Glossary");
 const Keyword = require("../../models/Keyword");
-const app = require("../../app");
 const { SIGNUP, GLOSSARY } = require("../../constants/error");
+
+const app = require("../../app");
 
 describe("POST /users/signup test", function callback() {
   this.timeout(10000);

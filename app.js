@@ -7,6 +7,7 @@ const logger = require("morgan");
 const cors = require("cors");
 
 const createHttpError = require("./utils/createHttpError");
+const { verifyIdToken } = require("./middlewares/auth/verifyIdToken");
 
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
@@ -23,6 +24,7 @@ app.use(cors());
 app.use(cookieParser());
 
 app.use("/", indexRouter);
+app.use(verifyIdToken);
 app.use("/users", usersRouter);
 app.use("/glossaries", glossariesRouter);
 app.use("/translations", translationsRouter);
