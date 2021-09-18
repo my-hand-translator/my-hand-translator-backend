@@ -50,7 +50,6 @@ npm test
   "keywords": ["react", "node", "express"],
   "glossary": {
     "component": "컴포넌트"
-    // ...
   }
 }
 ```
@@ -163,7 +162,6 @@ null
       "url": "www.naver.com",
       "createdAt": "2021-09-10T02:17:29.952Z"
     }
-    // ...
   ]
 }
 ```
@@ -187,20 +185,19 @@ null
 
 ```json
 {
-	"email": "somting@gmail.com",
-	"translations": [
-		{
-			"text": "As your app grows, you can catch a lot of bugs with typechecking.",
-			"translated": "앱이 성장함에 따라 유형 검사로 많은 버그를 잡을 수 있습니다.",
-		  "url": "http://www.naver.com"
-		  "glossary": {
-		    "react": "리액트",
-		    //...
-		  },
-      "createdAt": "2021-09-10T02:08:27.098Z"
-			"nanoId": "V1StGXR8_Z5jdHi6B-myT",
-		},
-	]
+  "email": "somting@gmail.com",
+  "translations": [
+    {
+      "text": "As your app grows, you can catch a lot of bugs with typechecking.",
+      "translated": "앱이 성장함에 따라 유형 검사로 많은 버그를 잡을 수 있습니다.",
+      "url": "http://www.naver.com",
+      "glossary": {
+        "react": "리액트"
+      },
+      "createdAt": "2021-09-10T02:08:27.098Z",
+      "nanoId": "V1StGXR8_Z5jdHi6B-myT"
+    }
+  ]
 }
 ```
 
@@ -231,14 +228,13 @@ null
 
 ```json
 {
-	"text": "As your app grows, you can catch a lot of bugs with typechecking.",
-	"translated": "앱이 성장함에 따라 유형 검사로 많은 버그를 잡을 수 있습니다.",
-  "url": "http://www.naver.com"
+  "text": "As your app grows, you can catch a lot of bugs with typechecking.",
+  "translated": "앱이 성장함에 따라 유형 검사로 많은 버그를 잡을 수 있습니다.",
+  "url": "http://www.naver.com",
   "glossary": {
-    "react": "리액트",
-    //...
+    "react": "리액트"
   },
-  "createdAt": "2021-09-10T02:08:27.098Z"
+  "createdAt": "2021-09-10T02:08:27.098Z",
   "nanoId": "V1StGXR8_Z5jdHi6B-myT"
 }
 ```
@@ -261,8 +257,8 @@ null
 
 ```
 {
-Authorization: `bearer ${accessToken}`,
-Content-Type: application/json,
+  Authorization: `bearer ${accessToken}`,
+  Content-Type: application/json,
 }
 ```
 
