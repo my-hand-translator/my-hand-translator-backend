@@ -10,13 +10,15 @@ const Translation = require("../../models/Translation");
 const app = require("../../app");
 
 describe("delete translation test", function cb() {
-  this.timeout(10000);
+  this.timeout(1000);
 
   const db = mongoose.connection;
   let translationId = null;
 
   const createTranslation = (done) => {
     const translationData = {
+      nanoId: "1",
+      createdAt: new Date().toISOString(),
       user: "test@gmail.com",
       origin:
         "As your app grows, you can catch a lot of bugs with typechecking.",

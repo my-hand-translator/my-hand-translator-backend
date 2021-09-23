@@ -4,10 +4,11 @@ const { expect } = require("chai");
 const { describe, it, before, after } = require("mocha");
 
 const createHttpError = require("../../utils/createHttpError");
-const app = require("../../app");
 const User = require("../../models/User");
 const { LOGIN } = require("../../constants/error");
 const { USER } = require("../../constants/responseMessages");
+
+const app = require("../../app");
 
 describe("POST /users/login test", function callback() {
   this.timeout(10000);
@@ -90,6 +91,7 @@ describe("POST /users/login test", function callback() {
         }
 
         const result = {
+          glossaryId: null,
           result: "ok",
           isUser: false,
           message: USER.NOT_FOUND,
@@ -116,6 +118,7 @@ describe("POST /users/login test", function callback() {
           result: "ok",
           isUser: true,
           message: USER.FOUND,
+          glossaryId: null,
         };
 
         expect(res.body).to.deep.equal(result);

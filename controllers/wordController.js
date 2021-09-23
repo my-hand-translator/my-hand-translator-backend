@@ -39,7 +39,7 @@ const checkTranslated = async (req, res, next) => {
     const translation = findSimilarTarget(words, translations, SIMILARITY);
 
     if (!translation) {
-      return res.json({ result: "ok" });
+      return res.json({ result: "ok", data: null });
     }
 
     delete translation._id;
